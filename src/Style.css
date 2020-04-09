@@ -1,0 +1,61 @@
+#appContainer {
+    -fx-background-color: #151414;
+}
+
+#buttonContainer {
+    -fx-background-color: #242424;
+    -fx-padding: 30px;
+    -fx-padding-top: 50px;
+}
+
+#btnSearch {
+    -fx-background-color: #242424;
+}
+
+#btnSearch:hover {
+    -fx-background-color: #6c6c6c;
+}
+
+#btnList {
+    -fx-background-color: #242424;
+}
+
+#btnList:hover {
+    -fx-background-color: #6c6c6c;
+}
+
+#bottomContainer {
+    -fx-background-color: #1A1A1A;
+    -fx-padding: 20px 30px 20px 30px;
+}
+
+#btnPrevious {
+    -fx-background-color: #1A1A1A;
+}
+
+#btnPrevious:hover {
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
+    -fx-background-color: #6c6c6c;
+}
+
+#btnPlay {
+    -fx-background-color: #1A1A1A;
+}
+
+#btnPlay:hover {
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
+    -fx-background-color: #6c6c6c;
+}
+
+
+#btnNext {
+    -fx-background-color: #1A1A1A;
+}
+
+#btnNext:hover {
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
+    -fx-background-color: #6c6c6c;
+}
