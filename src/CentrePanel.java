@@ -14,12 +14,12 @@ public class CentrePanel {
 
     private MediaPlayer mediaPlayer;
 
-    public MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
-    }
-
     public void setMediaPlayer(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
+    }
+
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
     }
 
     /*
@@ -39,12 +39,6 @@ public class CentrePanel {
         mediaPlayer.setAutoPlay(true);
         setMediaPlayer(mediaPlayer);
         mediaView.setMediaPlayer(mediaPlayer);
-
-        // preserve the ratio of the video if the window is resized.
-        /*DoubleProperty height = mediaView.fitHeightProperty();
-        DoubleProperty width = mediaView.fitWidthProperty();
-        width.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
-        height.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));*/
 
         //set mediaView in the centre of the gui
         layout.setCenter(mediaView);

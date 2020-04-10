@@ -1,9 +1,9 @@
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.FileInputStream;
@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 
 public class BottomPanel {
     CentrePanel centrePanel = new CentrePanel();
-    private MediaPlayer mediaPlayer = centrePanel.getMediaPlayer();
     public void buildBottom(BorderPane layout) {
         BorderPane bottomLayout = new BorderPane();
         bottomLayout.setId("bottomContainer");
@@ -51,29 +50,27 @@ public class BottomPanel {
         btnPlay.setMaxWidth(Double.MAX_VALUE);
         btnPlay.setId("btnPlay");
         btnPlay.setOnAction(event -> {
+            MediaPlayer mediaPlayer = centrePanel.getMediaPlayer();
             centrePanel.playVideo(layout);
-            System.out.println(mediaPlayer.getStatus());
-            if(mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-                try{
-                    playTrack[0] = new ImageView(new Image(new FileInputStream("assets/icon/pause.png")));
-                    playTrack[0].setFitHeight(35);
-                    playTrack[0].setFitWidth(35);
-                    btnPlay.setGraphic(playTrack[0]);
-                    mediaPlayer.pause();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            } else if(mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
-                try{
-                    playTrack[0] = new ImageView(new Image(new FileInputStream(path)));
-                    playTrack[0].setFitHeight(35);
-                    playTrack[0].setFitWidth(35);
-                    btnPlay.setGraphic(playTrack[0]);
-                    mediaPlayer.play(); // play video
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
+        });
+
+        //paused button
+        ImageView paused = null;
+        try {
+            paused = new ImageView(new Image(new FileInputStream("assets/icon/pause.png")));
+            paused.setFitHeight(35);
+            paused.setFitWidth(35);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Button pausedBtn = new Button("", paused);
+        pausedBtn.setAlignment(Pos.CENTER);
+        pausedBtn.setMaxWidth(Double.MAX_VALUE);
+        pausedBtn.setId("btnPlay");
+        pausedBtn.setOnAction(event -> {
+            //bottomBox.getChildren().remove(pausedBtn);
+            MediaPlayer mediaPlayer = centrePanel.getMediaPlayer();
+            mediaPlayer.pause();
         });
 
         //play next track
@@ -91,7 +88,7 @@ public class BottomPanel {
         btnNext.setId("btnNext");
 
         // Adding buttons to container
-        bottomBox.getChildren().addAll(btnPrevious, btnPlay, btnNext);
+        bottomBox.getChildren().addAll(btnPrevious, btnPlay, pausedBtn, btnNext);
         bottomLayout.setCenter(bottomBox);
         layout.setBottom(bottomLayout);
     }
