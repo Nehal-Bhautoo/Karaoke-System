@@ -60,7 +60,7 @@ public class LeftPanel {
         btnList.setAlignment(Pos.BASELINE_CENTER);
         btnList.setMaxWidth(Double.MAX_VALUE);
         btnList.setId("btnList");
-        btnList.setOnAction(event -> centrePanel.listMusicTitle());
+        btnList.setOnAction(event -> centrePanel.listMusicTitle(layout));
 
         // Adding all buttons to container
         buttonBox.getChildren().addAll(btnSearch, btnList);

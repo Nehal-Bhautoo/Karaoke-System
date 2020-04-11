@@ -1,7 +1,15 @@
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.util.Duration;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +21,10 @@ import java.util.List;
 public class CentrePanel {
 
     private MediaPlayer mediaPlayer;
+    private HBox mediaBar;
+    private Duration duration;
+    private Label playTime;
+    private Slider slider;
 
     public void setMediaPlayer(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
@@ -40,12 +52,105 @@ public class CentrePanel {
         setMediaPlayer(mediaPlayer);
         mediaView.setMediaPlayer(mediaPlayer);
 
+        mediaBar = new HBox();
+        mediaBar.setAlignment(Pos.CENTER);
+        mediaBar.setPadding(new Insets(5,10,5,10));
+        BorderPane.setAlignment(mediaBar, Pos.TOP_CENTER);
+
+        //Add time label
+        Label timeLabel = new Label("Time: ");
+        mediaBar.getChildren().add(timeLabel);
+
+        //Add spacer
+        Label spacer = new Label("     ");
+        mediaBar.getChildren().add(spacer);
+
+        //Add time Slider
+        slider = new Slider();
+        HBox.setHgrow(slider, Priority.ALWAYS);
+        slider.setMaxWidth(Double.MAX_VALUE);
+        slider.setMinWidth(50);
+        slider.valueProperty().addListener(observable -> {
+            if(slider.isValueChanging()) {
+                //multiply duration by percentage calculated by slider position
+                mediaPlayer.seek(duration.multiply(slider.getValue() / 100.0));
+            }
+        });
+        mediaBar.getChildren().add(slider);
+
+        // Add play time
+        playTime = new Label();
+        playTime.setPrefWidth(130);
+        playTime.setMinWidth(50);
+        mediaBar.getChildren().add(playTime);
+
+        updateValues();
         //set mediaView in the centre of the gui
         layout.setCenter(mediaView);
+        layout.setTop(mediaBar);
+    }
+
+    protected void updateValues() {
+        if (playTime != null && slider != null) {
+            Platform.runLater(() -> {
+                Duration currentTime = mediaPlayer.getCurrentTime();
+                playTime.setText(formatTime(currentTime, duration));
+                slider.setDisable(duration.isUnknown());
+                if (!slider.isDisabled()
+                        && duration.greaterThan(Duration.ZERO)
+                        && !slider.isValueChanging()) {
+                    slider.setValue(currentTime.divide(duration).toMillis()*100.0);
+                }
+            });
+        }
+    }
+
+    /*
+     * The format time method calculates
+     * the elapsed time the media has been playing
+     * and formats it to be displayed
+     */
+    private static String formatTime(Duration elapsed, Duration duration) {
+        int intElapsed = (int)Math.floor(elapsed.toSeconds());
+        int elapsedHours = intElapsed / (60 * 60);
+        if (elapsedHours > 0) {
+            intElapsed -= elapsedHours * 60 * 60;
+        }
+        int elapsedMinutes = intElapsed / 60;
+        int elapsedSeconds = intElapsed - elapsedHours * 60 * 60
+                - elapsedMinutes * 60;
+
+        if (duration.greaterThan(Duration.ZERO)) {
+            int intDuration = (int)Math.floor(duration.toSeconds());
+            int durationHours = intDuration / (60 * 60);
+            if (durationHours > 0) {
+                intDuration -= durationHours * 60 * 60;
+            }
+            int durationMinutes = intDuration / 60;
+            int durationSeconds = intDuration - durationHours * 60 * 60 -
+                    durationMinutes * 60;
+            if (durationHours > 0) {
+                return String.format("%d:%02d:%02d/%d:%02d:%02d",
+                        elapsedHours, elapsedMinutes, elapsedSeconds,
+                        durationHours, durationMinutes, durationSeconds);
+            } else {
+                return String.format("%02d:%02d/%02d:%02d",
+                        elapsedMinutes, elapsedSeconds,durationMinutes,
+                        durationSeconds);
+            }
+        } else {
+            if (elapsedHours > 0) {
+                return String.format("%d:%02d:%02d", elapsedHours,
+                        elapsedMinutes, elapsedSeconds);
+            } else {
+                return String.format("%02d:%02d",elapsedMinutes,
+                        elapsedSeconds);
+            }
+        }
     }
 
     // display all data from array
-    public void listMusicTitle() {
+    public void listMusicTitle(BorderPane layout) {
         Music[] music;
         music = musicArray();
         String author;
@@ -59,7 +164,6 @@ public class CentrePanel {
                     playTime = music[i].getPlayingTime(),
                     videoName = music[i].getVideoFileName()
             );
-            System.out.println(author + " " + title+ " " + playTime+ " " + videoName);
         }
     }
 
@@ -110,7 +214,6 @@ public class CentrePanel {
             new Music(
                 songTitle = Collections.singletonList(music[i].getSongTitle())
             );
-            //System.out.println(songTitle);
             musics.setArray(songTitle);
         }
     }
