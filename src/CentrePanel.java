@@ -17,7 +17,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-
+/**
+ * Implementation of the Centre interface that will be displayed.
+ * This implementation will shows the Musics list and play video.
+ * @author Nehal Bhautoo
+ */
 public class CentrePanel {
 
     private MediaPlayer mediaPlayer;
@@ -34,10 +38,11 @@ public class CentrePanel {
         return mediaPlayer;
     }
 
-    /*
-     * get video file path using
-     * File()
-     * display video in the gui window
+    /**
+     * get video file path using,
+     * File() method.
+     * Construct a new layout based on parameter.
+     * @param layout The centre layout to be displayed.
      */
     public void playVideo(BorderPane layout) {
 
@@ -105,10 +110,12 @@ public class CentrePanel {
         }
     }
 
-    /*
+    /**
      * The format time method calculates
      * the elapsed time the media has been playing
      * and formats it to be displayed
+     * @param elapsed
+     * @param duration
      */
     private static String formatTime(Duration elapsed, Duration duration) {
         int intElapsed = (int)Math.floor(elapsed.toSeconds());
@@ -157,13 +164,23 @@ public class CentrePanel {
         String title;
         String playTime;
         String videoName;
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setPadding(new Insets(15, 12, 15, 12));
+        hBox.setSpacing(10);
         for(int i = 0; i<readFile(); i++) {
-            new Music(
+            /*new Music(
                     title = music[i].getSongTitle(),
                     author = music[i].getArtist(),
                     playTime = music[i].getPlayingTime(),
                     videoName = music[i].getVideoFileName()
-            );
+            );*/
+            Label musicTitle = new Label(music[i].getSongTitle());
+            Label songAuthor = new Label(music[i].getArtist());
+            Label songPlayTime = new Label(music[i].getPlayingTime());
+
+            hBox.getChildren().addAll(musicTitle, songAuthor, songPlayTime);
+            layout.setCenter(hBox);
         }
     }
 
