@@ -6,11 +6,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -24,7 +24,6 @@ import static javafx.geometry.Pos.TOP_CENTER;
  */
 public class LeftPanel {
 
-    private AutoCompletionBinding<String> autoCompletionBinding;
     private final Map<String, String> mapFile = CentrePanel.getTextFile();
     private Set<String> suggestions = new HashSet<>();
 
@@ -91,10 +90,8 @@ public class LeftPanel {
 
     private void searchField(BorderPane layout) {
 
-        String song = null;
         for(Map.Entry<String, String> entry : mapFile.entrySet()) {
-            song = entry.getKey();
-            //System.out.println(entry.getKey() + " => " + entry.getValue());
+            suggestions.addAll(Collections.singleton(entry.getKey()));
         }
 
         HBox hBox = new HBox();
@@ -102,7 +99,7 @@ public class LeftPanel {
 
         TextField searchField = new TextField();
         searchField.setPromptText("Search Song");
-        TextFields.bindAutoCompletion(searchField, song);
+        TextFields.bindAutoCompletion(searchField, suggestions);
 
         hBox.getChildren().add(searchField);
         layout.setCenter(hBox);
