@@ -1,15 +1,19 @@
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
 
-import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static javafx.geometry.Pos.TOP_CENTER;
 
@@ -19,6 +23,10 @@ import static javafx.geometry.Pos.TOP_CENTER;
  * @author Nehal Bhautoo
  */
 public class LeftPanel {
+
+    private AutoCompletionBinding<String> autoCompletionBinding;
+    private final Map<String, String> mapFile = CentrePanel.getTextFile();
+    private Set<String> suggestions = new HashSet<>();
 
     /**
      * This method add all the buttons that the user will interact with.
@@ -50,14 +58,13 @@ public class LeftPanel {
         btnSearch.setId("btnSearch");
         btnSearch.setOnAction(event -> {
             try {
-                searching();
+                searchField(layout);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
 
         //list all music buttons
-        CentrePanel centrePanel = new CentrePanel();
         ImageView listIcon = null;
         try {
             listIcon = new ImageView(new Image(new FileInputStream("assets/icon/list.png")));
@@ -71,7 +78,6 @@ public class LeftPanel {
         btnList.setMaxWidth(Double.MAX_VALUE);
         btnList.setId("btnList");
         btnList.setOnAction(event -> {
-            Map<String, String> mapFile = CentrePanel.getTextFile();
             for(Map.Entry<String, String> entry : mapFile.entrySet()) {
                 System.out.println(entry.getKey() + " => " + entry.getValue());
             }
@@ -83,20 +89,22 @@ public class LeftPanel {
         layout.setLeft(leftLayout);
     }
 
-    public void searching() throws Exception {
-        SwingUtilities.invokeAndWait(() -> {
-            Map<String, String> songTitle = CentrePanel.getTextFile();
-            SearchSong searchSong = null;
-            for(Map.Entry<String, String> entry : songTitle.entrySet()) {
-                searchSong = new SearchSong(Collections.singletonList(entry.getKey()));
-            }
-            AutoCompleteBox autoCompleteBox = new AutoCompleteBox(searchSong);
-            JFrame frame = new JFrame();
-            frame.add(autoCompleteBox);
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-            frame.setVisible(true);
-        });
+    private void searchField(BorderPane layout) {
+
+        String song = null;
+        for(Map.Entry<String, String> entry : mapFile.entrySet()) {
+            song = entry.getKey();
+            //System.out.println(entry.getKey() + " => " + entry.getValue());
+        }
+
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+
+        TextField searchField = new TextField();
+        searchField.setPromptText("Search Song");
+        TextFields.bindAutoCompletion(searchField, song);
+
+        hBox.getChildren().add(searchField);
+        layout.setCenter(hBox);
     }
 }

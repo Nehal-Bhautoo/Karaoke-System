@@ -25,11 +25,11 @@ import java.util.Map;
 public class CentrePanel {
 
     private MediaPlayer mediaPlayer;
-    private HBox mediaBar;
     private Duration duration;
     private Label playTime;
     private Slider slider;
     final static String filePath = "list.txt";
+
 
     public void setMediaPlayer(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
@@ -58,10 +58,10 @@ public class CentrePanel {
         setMediaPlayer(mediaPlayer);
         mediaView.setMediaPlayer(mediaPlayer);
 
-        mediaBar = new HBox();
+        HBox mediaBar = new HBox();
         mediaBar.setAlignment(Pos.CENTER);
         mediaBar.setPadding(new Insets(5,10,5,10));
-        BorderPane.setAlignment(mediaBar, Pos.TOP_CENTER);
+        BorderPane.setAlignment(mediaBar, Pos.CENTER);
 
         //Add time label
         Label timeLabel = new Label("Time: ");
@@ -99,68 +99,18 @@ public class CentrePanel {
     protected void updateValues() {
         if (playTime != null && slider != null) {
             Platform.runLater(() -> {
+                MediaPlayer mediaPlayer = getMediaPlayer();
                 Duration currentTime = mediaPlayer.getCurrentTime();
-                playTime.setText(formatTime(currentTime, duration));
-                slider.setDisable(duration.isUnknown());
-                if (!slider.isDisabled()
-                        && duration.greaterThan(Duration.ZERO)
-                        && !slider.isValueChanging()) {
-                    slider.setValue(currentTime.divide(duration).toMillis()*100.0);
-                }
+                playTime.setText(String.valueOf(currentTime));
             });
         }
     }
 
-    /**
-     * The format time method calculates
-     * the elapsed time the media has been playing
-     * and formats it to be displayed
-     * @param elapsed
-     * @param duration
-     */
-    private static String formatTime(Duration elapsed, Duration duration) {
-        int intElapsed = (int)Math.floor(elapsed.toSeconds());
-        int elapsedHours = intElapsed / (60 * 60);
-        if (elapsedHours > 0) {
-            intElapsed -= elapsedHours * 60 * 60;
-        }
-        int elapsedMinutes = intElapsed / 60;
-        int elapsedSeconds = intElapsed - elapsedHours * 60 * 60
-                - elapsedMinutes * 60;
-
-        if (duration.greaterThan(Duration.ZERO)) {
-            int intDuration = (int)Math.floor(duration.toSeconds());
-            int durationHours = intDuration / (60 * 60);
-            if (durationHours > 0) {
-                intDuration -= durationHours * 60 * 60;
-            }
-            int durationMinutes = intDuration / 60;
-            int durationSeconds = intDuration - durationHours * 60 * 60 -
-                    durationMinutes * 60;
-            if (durationHours > 0) {
-                return String.format("%d:%02d:%02d/%d:%02d:%02d",
-                        elapsedHours, elapsedMinutes, elapsedSeconds,
-                        durationHours, durationMinutes, durationSeconds);
-            } else {
-                return String.format("%02d:%02d/%02d:%02d",
-                        elapsedMinutes, elapsedSeconds,durationMinutes,
-                        durationSeconds);
-            }
-        } else {
-            if (elapsedHours > 0) {
-                return String.format("%d:%02d:%02d", elapsedHours,
-                        elapsedMinutes, elapsedSeconds);
-            } else {
-                return String.format("%02d:%02d",elapsedMinutes,
-                        elapsedSeconds);
-            }
-        }
-    }
     /*
      * Read content from text file and append the data in HashMap
      */
     public static Map<String, String> getTextFile() {
-        Map<String, String> fileContent = new HashMap<String, String>();
+        Map<String, String> fileContent = new HashMap<>();
         BufferedReader bufferedReader = null;
         try {
             // file object
@@ -168,7 +118,7 @@ public class CentrePanel {
 
             //create BufferedReader object from the File
             bufferedReader = new BufferedReader(new FileReader(file));
-            String line = null;
+            String line;
 
             //read each line in text file
             while((line = bufferedReader.readLine()) != null) {
