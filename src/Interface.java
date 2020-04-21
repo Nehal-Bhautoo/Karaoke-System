@@ -5,6 +5,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+/**
+ * Implementation of the Interface that will run the app.
+ * This implementation will display all the interface functionalities.
+ * @author Nehal Bhautoo
+ */
 public class Interface extends Application {
 
     private Scene scene;
@@ -17,18 +22,30 @@ public class Interface extends Application {
     @Override
     public void start(Stage primaryStage) {
         layout = new BorderPane();
+
+        // give root node a CSS ID attribute
         layout.setId("appContainer");
         setSceneProperties();
 
+        /*
+         * Build app layout
+         */
         BottomPanel bottomPanel = new BottomPanel();
         bottomPanel.buildBottom(layout);
 
         LeftPanel leftPanel = new LeftPanel();
         leftPanel.buildLeft(layout);
 
+
+        // set properties of window application
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+    /**
+     * setSceneProperties. This simply sets app size.
+     * It also is where the css stylesheet is attached to app.
+     */
 
     private void setSceneProperties() {
         double percentageWidth = 0.68;

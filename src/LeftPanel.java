@@ -25,7 +25,7 @@ import static javafx.geometry.Pos.TOP_CENTER;
 public class LeftPanel {
 
     private final Map<String, String> mapFile = CentrePanel.getTextFile();
-    private Set<String> suggestions = new HashSet<>();
+    private final Set<String> suggestions = new HashSet<>();
 
     /**
      * This method add all the buttons that the user will interact with.
@@ -87,11 +87,16 @@ public class LeftPanel {
         leftLayout.setCenter(buttonBox);
         layout.setLeft(leftLayout);
     }
-
+     /**
+      * Implementation of the search functionalities
+      * @param layout set the textfield in the center
+      */
     private void searchField(BorderPane layout) {
 
+        // looping through HashMap
         for(Map.Entry<String, String> entry : mapFile.entrySet()) {
-            suggestions.addAll(Collections.singleton(entry.getKey()));
+            // populate hashSet with hashMap value
+            suggestions.addAll(Collections.singleton(entry.getValue()));
         }
 
         HBox hBox = new HBox();
