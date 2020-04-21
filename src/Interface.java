@@ -11,7 +11,6 @@ public class Interface extends Application {
     public BorderPane layout;
 
     public static void main(String[] args) {
-        CentrePanel.musicArray();
         launch();
     }
 

@@ -8,12 +8,22 @@ import javafx.scene.layout.VBox;
 import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.List;
+import java.util.Collections;
+import java.util.Map;
 
 import static javafx.geometry.Pos.TOP_CENTER;
 
+/**
+ * Implementation of the Left interface.
+ * This implementation will display search button and list all music.
+ * @author Nehal Bhautoo
+ */
 public class LeftPanel {
 
+    /**
+     * This method add all the buttons that the user will interact with.
+     * @param layout the left layout
+     */
     public void buildLeft(BorderPane layout) {
         BorderPane leftLayout = new BorderPane();
 
@@ -60,7 +70,12 @@ public class LeftPanel {
         btnList.setAlignment(Pos.BASELINE_CENTER);
         btnList.setMaxWidth(Double.MAX_VALUE);
         btnList.setId("btnList");
-        btnList.setOnAction(event -> centrePanel.listMusicTitle(layout));
+        btnList.setOnAction(event -> {
+            Map<String, String> mapFile = CentrePanel.getTextFile();
+            for(Map.Entry<String, String> entry : mapFile.entrySet()) {
+                System.out.println(entry.getKey() + " => " + entry.getValue());
+            }
+        });
 
         // Adding all buttons to container
         buttonBox.getChildren().addAll(btnSearch, btnList);
@@ -70,10 +85,11 @@ public class LeftPanel {
 
     public void searching() throws Exception {
         SwingUtilities.invokeAndWait(() -> {
-            CentrePanel centrePanel = new CentrePanel();
-            centrePanel.getSongTitle();
-            List<String> songTitle = MusicArray.getMusic();
-            SearchSong searchSong = new SearchSong(songTitle);
+            Map<String, String> songTitle = CentrePanel.getTextFile();
+            SearchSong searchSong = null;
+            for(Map.Entry<String, String> entry : songTitle.entrySet()) {
+                searchSong = new SearchSong(Collections.singletonList(entry.getKey()));
+            }
             AutoCompleteBox autoCompleteBox = new AutoCompleteBox(searchSong);
             JFrame frame = new JFrame();
             frame.add(autoCompleteBox);

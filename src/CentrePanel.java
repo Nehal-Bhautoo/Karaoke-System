@@ -14,12 +14,12 @@ import javafx.util.Duration;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Implementation of the Centre interface that will be displayed.
- * This implementation will shows the Musics list and play video.
+ * This implementation will display the Musics list and play video.
  * @author Nehal Bhautoo
  */
 public class CentrePanel {
@@ -29,6 +29,7 @@ public class CentrePanel {
     private Duration duration;
     private Label playTime;
     private Slider slider;
+    final static String filePath = "list.txt";
 
     public void setMediaPlayer(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
@@ -155,83 +156,43 @@ public class CentrePanel {
             }
         }
     }
-
-    // display all data from array
-    public void listMusicTitle(BorderPane layout) {
-        Music[] music;
-        music = musicArray();
-        String author;
-        String title;
-        String playTime;
-        String videoName;
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER);
-        hBox.setPadding(new Insets(15, 12, 15, 12));
-        hBox.setSpacing(10);
-        for(int i = 0; i<readFile(); i++) {
-            /*new Music(
-                    title = music[i].getSongTitle(),
-                    author = music[i].getArtist(),
-                    playTime = music[i].getPlayingTime(),
-                    videoName = music[i].getVideoFileName()
-            );*/
-            Label musicTitle = new Label(music[i].getSongTitle());
-            Label songAuthor = new Label(music[i].getArtist());
-            Label songPlayTime = new Label(music[i].getPlayingTime());
-
-            hBox.getChildren().addAll(musicTitle, songAuthor, songPlayTime);
-            layout.setCenter(hBox);
-        }
-    }
-
-    // opening text file
-    private static int readFile() {
-        int count = 0;
+    /*
+     * Read content from text file and append the data in HashMap
+     */
+    public static Map<String, String> getTextFile() {
+        Map<String, String> fileContent = new HashMap<String, String>();
+        BufferedReader bufferedReader = null;
         try {
-            String line;
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("list.txt")));
+            // file object
+            File file = new File(filePath);
+
+            //create BufferedReader object from the File
+            bufferedReader = new BufferedReader(new FileReader(file));
+            String line = null;
+
+            //read each line in text file
             while((line = bufferedReader.readLine()) != null) {
-                count++;
+                //split line
+                String[] parts = line.split(":");
+
+                String musicTitle = parts[0].trim();
+                String artist = parts[1].trim();
+
+                //put song and artists in HashMap if not empty
+                if(!musicTitle.equals("") && !artist.equals("")) {
+                    fileContent.put(musicTitle, artist);
+                }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } return count;
-    }
-
-    // reading txt file
-    // add data from file to array
-    public static Music[] musicArray() {
-        Music[] music = new Music[readFile()];
-        String line;
-        String[] array;
-
-        int i =0;
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("list.txt")));
-            while((line = bufferedReader.readLine()) != null) {
-                array = line.split(":");
-                music[i] = new Music();
-                music[i].setSongTitle(array[0]);
-                music[i].setArtist(array[1]);
-                music[i].setPlayingTime(array[2]);
-                music[i].setVideoFileName(array[3]);
-                i++;
-            } bufferedReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } return music;
-    }
-
-    public void getSongTitle() {
-        MusicArray musics = new MusicArray();
-        List<String> songTitle;
-        Music[] music;
-        music = musicArray();
-        for(int i = 0; i<readFile(); i++) {
-            new Music(
-                songTitle = Collections.singletonList(music[i].getSongTitle())
-            );
-            musics.setArray(songTitle);
-        }
+        } finally {
+            if(bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } return fileContent;
     }
 }
