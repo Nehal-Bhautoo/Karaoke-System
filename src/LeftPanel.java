@@ -1,10 +1,8 @@
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -18,7 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-import static javafx.geometry.Pos.TOP_CENTER;
+import static javafx.geometry.Pos.*;
 
 /**
  * Implementation of the Left interface.
@@ -115,10 +113,10 @@ public class LeftPanel {
         Label author = new Label("Artist");
         author.setId("authorList");
 
-        GridPane gridPane = new GridPane();
+        VBox vBox = new VBox();
 
-        //Setting size for the pane
-        gridPane.setMinSize(500, 300);
+        GridPane gridPane = new GridPane();
+        gridPane.setId("gridPane");
 
         //Setting the padding
         gridPane.setPadding(new Insets(10, 10, 10, 10));
@@ -128,13 +126,19 @@ public class LeftPanel {
         gridPane.setHgap(450);
 
         //Setting the Grid alignment
-        gridPane.setAlignment(TOP_CENTER);
+        gridPane.setAlignment(CENTER);
 
+        // Add a separator line
+        Separator separator = new Separator(Orientation.HORIZONTAL);
+        separator.setId("separator");
         //Arranging all the nodes in the grid
         gridPane.add(music, 0, 0);
         gridPane.add(author, 1,0);
 
-        layout.setCenter(gridPane);
+        vBox.getChildren().addAll(gridPane, separator);
+        vBox.setAlignment(TOP_CENTER);
+
+        layout.setCenter(vBox);
     }
 
      /**
@@ -184,9 +188,7 @@ public class LeftPanel {
                 newAlertBox.alertBox(songTitle + " added to Playlist");
             }
         });
-
         hBox.getChildren().addAll(label, separator, searchField, separator2, addPlaylist);
-
         Scene scene = new Scene(hBox, 400, 200);
 
         // attach css file

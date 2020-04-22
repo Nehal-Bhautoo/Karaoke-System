@@ -2,6 +2,7 @@
     -fx-background-color: #151414;
 }
 
+/*Left Panel*/
 #buttonContainer {
     -fx-background-color: #242424;
     -fx-padding: 30px;
@@ -32,6 +33,7 @@
     -fx-background-color: #6c6c6c;
 }
 
+/*Bottom Panel*/
 #bottomContainer {
     -fx-background-color: #1A1A1A;
     -fx-padding: 20px 30px 20px 30px;
@@ -67,7 +69,7 @@
     -fx-background-radius: 20 20 20 20;
     -fx-background-color: #6c6c6c;
 }
-
+/* list music */
 #musicList {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
@@ -80,6 +82,12 @@
     -fx-text-fill: #FFFFFF;
 }
 
+#separator {
+    -fx-background-color: #2977d7;
+    -fx-background-radius: 2;
+}
+
+/*Search Window*/
 #searchContainer {
     -fx-background-color: #151414;
 }
