@@ -1,3 +1,4 @@
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -6,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -78,7 +80,7 @@ public class LeftPanel {
         btnList.setAlignment(Pos.BASELINE_CENTER);
         btnList.setMaxWidth(Double.MAX_VALUE);
         btnList.setId("btnList");
-        btnList.setOnAction(event -> listMusic());
+        btnList.setOnAction(event -> listMusic(layout));
 
         // Adding all buttons to container
         buttonBox.getChildren().addAll(btnSearch, btnList);
@@ -86,13 +88,34 @@ public class LeftPanel {
         layout.setLeft(leftLayout);
     }
 
-    private void listMusic() {
-        Song song = new Song();
-        for(Map.Entry<String, String> entry : mapFile.entrySet()) {
-            //System.out.println(entry.getKey() + " => " + entry.getValue());
-            song.setSongTitle(entry.getKey());
-            song.setAuthor(entry.getValue());
-        }
+    /**
+     * List all the songs and authors
+     * @param layout set the list in the centre panel
+     */
+    private void listMusic(BorderPane layout) {
+        Label music = new Label("Song");
+        music.setId("musicList");
+
+        Label author = new Label("Artist");
+        author.setId("authorList");
+
+        GridPane gridPane = new GridPane();
+
+        //Setting the padding
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+
+        //Setting the vertical and horizontal gaps between the columns
+        gridPane.setVgap(50);
+        gridPane.setHgap(50);
+
+        //Setting the Grid alignment
+        gridPane.setAlignment(TOP_CENTER);
+
+        //Arranging all the nodes in the grid
+        gridPane.add(music, 0, 0);
+        gridPane.add(author, 1,0);
+
+        layout.setCenter(gridPane);
     }
 
      /**

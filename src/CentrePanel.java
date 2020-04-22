@@ -106,8 +106,9 @@ public class CentrePanel {
         }
     }
 
-    /*
+    /**
      * Read content from text file and append the data in HashMap
+     * @return the content of the file
      */
     public static Map<String, String> getTextFile() {
         Map<String, String> fileContent = new HashMap<>();

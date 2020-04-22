@@ -5,6 +5,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.util.Map;
+
 /**
  * Implementation of the Interface that will run the app.
  * This implementation will display all the interface functionalities.
@@ -16,6 +18,12 @@ public class Interface extends Application {
     public BorderPane layout;
 
     public static void main(String[] args) {
+        Song song = new Song();
+        Map<String, String> mapFile = CentrePanel.getTextFile();
+        for(Map.Entry<String, String> entry : mapFile.entrySet()) {
+            song.setSongTitle(entry.getKey());
+            song.setAuthor(entry.getValue());
+        }
         launch();
     }
 
