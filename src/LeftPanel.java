@@ -78,17 +78,23 @@ public class LeftPanel {
         btnList.setAlignment(Pos.BASELINE_CENTER);
         btnList.setMaxWidth(Double.MAX_VALUE);
         btnList.setId("btnList");
-        btnList.setOnAction(event -> {
-            for(Map.Entry<String, String> entry : mapFile.entrySet()) {
-                System.out.println(entry.getKey() + " => " + entry.getValue());
-            }
-        });
+        btnList.setOnAction(event -> listMusic());
 
         // Adding all buttons to container
         buttonBox.getChildren().addAll(btnSearch, btnList);
         leftLayout.setCenter(buttonBox);
         layout.setLeft(leftLayout);
     }
+
+    private void listMusic() {
+        Song song = new Song();
+        for(Map.Entry<String, String> entry : mapFile.entrySet()) {
+            //System.out.println(entry.getKey() + " => " + entry.getValue());
+            song.setSongTitle(entry.getKey());
+            song.setAuthor(entry.getValue());
+        }
+    }
+
      /**
       * Implementation of the search functionalities
       */
@@ -122,10 +128,14 @@ public class LeftPanel {
         addPlaylist.setText("Add to playlist");
         addPlaylist.setMaxWidth(Double.MAX_VALUE);
         addPlaylist.setOnAction(event -> {
+            // get text from textfield
             String songTitle = searchField.getText();
+
+            // validating text from textfield
             if(songTitle == null || songTitle.equals("")) {
                 JOptionPane.showMessageDialog(null,"Enter Song Title");
             } else {
+                // add searched to linklist
                 playlist.add(songTitle);
                 JOptionPane.showMessageDialog(null, songTitle + " added to Playlist");
             }

@@ -1,14 +1,15 @@
 public class Song {
     private String songTitle;
     private String author;
-    private String playTime;
-    private String music;
 
-    public Song(String songTitle, String author, String playTime, String music) {
+    public Song(String songTitle, String author) {
         this.songTitle = songTitle;
         this.author = author;
-        this.playTime = playTime;
-        this.music = music;
+    }
+
+    public Song() {
+        this.songTitle = "";
+        this.author = "";
     }
 
     public String getSongTitle() {
@@ -25,21 +26,5 @@ public class Song {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public String getPlayTime() {
-        return playTime;
-    }
-
-    public void setPlayTime(String playTime) {
-        this.playTime = playTime;
-    }
-
-    public String getMusic() {
-        return music;
-    }
-
-    public void setMusic(String music) {
-        this.music = music;
     }
 }
