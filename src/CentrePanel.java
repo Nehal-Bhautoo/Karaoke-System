@@ -30,7 +30,6 @@ public class CentrePanel {
     private Slider slider;
     final static String filePath = "list.txt";
 
-
     public void setMediaPlayer(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
     }

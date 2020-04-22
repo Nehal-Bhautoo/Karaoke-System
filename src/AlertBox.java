@@ -23,6 +23,7 @@ public class AlertBox {
 
         // Create new Stage
         Stage primaryStage = stage;
+        primaryStage.setTitle("ALERT!!!");
 
         // create hHox to hold the message
         HBox titleBox = new HBox();

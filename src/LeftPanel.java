@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -45,7 +46,6 @@ public class LeftPanel {
         buttonBox.setId("buttonContainer");
         buttonBox.setSpacing(10);
 
-
         // Search button
         ImageView searchIcon = null;
         try {
@@ -53,19 +53,16 @@ public class LeftPanel {
             searchIcon.setFitHeight(35);
             searchIcon.setFitWidth(35);
         } catch (FileNotFoundException e) {
+            newAlertBox.alertBox("Search Icon Not Found!!!");
             e.printStackTrace();
         }
         Button btnSearch = new Button("", searchIcon);
         btnSearch.setAlignment(Pos.BASELINE_CENTER);
         btnSearch.setMaxWidth(Double.MAX_VALUE);
         btnSearch.setId("btnSearch");
-        btnSearch.setOnAction(event -> {
-            try {
-                searchField();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        btnSearch.setOnAction(event -> searchField());
+        Tooltip search = HoverMessage.getTooltip("Search Song");
+        btnSearch.setTooltip(search);
 
         //list all music buttons
         ImageView listIcon = null;
@@ -74,6 +71,7 @@ public class LeftPanel {
             listIcon.setFitWidth(35);
             listIcon.setFitHeight(35);
         } catch (FileNotFoundException e) {
+            newAlertBox.alertBox("List Icon Not Found!!!");
             e.printStackTrace();
         }
         Button btnList = new Button("", listIcon);
@@ -81,9 +79,27 @@ public class LeftPanel {
         btnList.setMaxWidth(Double.MAX_VALUE);
         btnList.setId("btnList");
         btnList.setOnAction(event -> listMusic(layout));
+        Tooltip listMusic = HoverMessage.getTooltip("List All Song");
+        btnList.setTooltip(listMusic);
+
+        // Playlist button
+        ImageView playlist = null;
+        try {
+            playlist = new ImageView(new Image(new FileInputStream("assets/icon/playlist.png")));
+            playlist.setFitHeight(35);
+            playlist.setFitWidth(35);
+        } catch (FileNotFoundException e) {
+            newAlertBox.alertBox("Playlist Icon Not found");
+        }
+        Button btnPlayList = new Button("", playlist);
+        btnPlayList.setAlignment(Pos.BASELINE_CENTER);
+        btnPlayList.setMaxWidth(Double.MAX_VALUE);
+        btnPlayList.setId("playListBtn");
+        Tooltip playList = HoverMessage.getTooltip("PlayList");
+        btnPlayList.setTooltip(playList);
 
         // Adding all buttons to container
-        buttonBox.getChildren().addAll(btnSearch, btnList);
+        buttonBox.getChildren().addAll(btnSearch, btnList, btnPlayList);
         leftLayout.setCenter(buttonBox);
         layout.setLeft(leftLayout);
     }

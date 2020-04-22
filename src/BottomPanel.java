@@ -1,5 +1,6 @@
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -33,6 +34,8 @@ public class BottomPanel {
         btnPrevious.setId("btnPrevious");
         btnPrevious.setOnAction(event -> {
         });
+        Tooltip play_previous_track = HoverMessage.getTooltip("Play Previous Track");
+        btnPrevious.setTooltip(play_previous_track);
 
         //play or pause track
         final ImageView[] playTrack = {null};
@@ -49,10 +52,9 @@ public class BottomPanel {
         btnPlay.setAlignment(Pos.CENTER);
         btnPlay.setMaxWidth(Double.MAX_VALUE);
         btnPlay.setId("btnPlay");
-        btnPlay.setOnAction(event -> {
-            MediaPlayer mediaPlayer = centrePanel.getMediaPlayer();
-            centrePanel.playVideo(layout);
-        });
+        btnPlay.setOnAction(event -> centrePanel.playVideo(layout));
+        Tooltip play = HoverMessage.getTooltip("Play");
+        btnPlay.setTooltip(play);
 
         //paused button
         ImageView paused = null;
@@ -72,6 +74,8 @@ public class BottomPanel {
             MediaPlayer mediaPlayer = centrePanel.getMediaPlayer();
             mediaPlayer.pause();
         });
+        Tooltip pause = HoverMessage.getTooltip("Pause");
+        pausedBtn.setTooltip(pause);
 
         //play next track
         ImageView playNext = null;
@@ -86,6 +90,8 @@ public class BottomPanel {
         btnNext.setAlignment(Pos.CENTER);
         btnNext.setMaxWidth(Double.MAX_VALUE);
         btnNext.setId("btnNext");
+        Tooltip play_next_track = HoverMessage.getTooltip("Play Next Track");
+        btnNext.setTooltip(play_next_track);
 
         // Adding buttons to container
         bottomBox.getChildren().addAll(btnPrevious, btnPlay, pausedBtn, btnNext);
