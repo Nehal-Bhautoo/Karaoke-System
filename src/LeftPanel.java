@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
 
-import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -30,6 +29,7 @@ public class LeftPanel {
     private final Map<String, String> mapFile = CentrePanel.getTextFile();
     private final Set<String> suggestions = new HashSet<>();
     private final LinkedList<String> playlist = new LinkedList<>();
+    AlertBox newAlertBox = new AlertBox();
 
     /**
      * This method add all the buttons that the user will interact with.
@@ -101,12 +101,15 @@ public class LeftPanel {
 
         GridPane gridPane = new GridPane();
 
+        //Setting size for the pane
+        gridPane.setMinSize(500, 300);
+
         //Setting the padding
         gridPane.setPadding(new Insets(10, 10, 10, 10));
 
         //Setting the vertical and horizontal gaps between the columns
         gridPane.setVgap(50);
-        gridPane.setHgap(50);
+        gridPane.setHgap(450);
 
         //Setting the Grid alignment
         gridPane.setAlignment(TOP_CENTER);
@@ -119,7 +122,7 @@ public class LeftPanel {
     }
 
      /**
-      * Implementation of the search functionalities
+      * Implementation of the search interface
       */
     private void searchField() {
 
@@ -142,6 +145,7 @@ public class LeftPanel {
 
         TextField searchField = new TextField();
         searchField.setPromptText("Search Song");
+        searchField.setId("searchField");
         TextFields.bindAutoCompletion(searchField, suggestions);
 
         Label separator2 = new Label("    ");
@@ -154,19 +158,24 @@ public class LeftPanel {
             // get text from textfield
             String songTitle = searchField.getText();
 
-            // validating text from textfield
-            if(songTitle == null || songTitle.equals("")) {
-                JOptionPane.showMessageDialog(null,"Enter Song Title");
+            // validating searched song entered from textfield
+            if(songTitle.equals("")) {
+                newAlertBox.alertBox("Enter Song Title");
             } else {
-                // add searched to linklist
+                // add searched song to linklist
                 playlist.add(songTitle);
-                JOptionPane.showMessageDialog(null, songTitle + " added to Playlist");
+                System.out.println(playlist);
+                newAlertBox.alertBox(songTitle + " added to Playlist");
             }
         });
 
         hBox.getChildren().addAll(label, separator, searchField, separator2, addPlaylist);
 
         Scene scene = new Scene(hBox, 400, 200);
+
+        // attach css file
+        String cssFile = this.getClass().getResource("Style.css").toExternalForm();
+        scene.getStylesheets().add(cssFile);
         stage.setScene(scene);
         stage.show();
     }

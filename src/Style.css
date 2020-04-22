@@ -59,3 +59,76 @@
     -fx-background-radius: 20 20 20 20;
     -fx-background-color: #6c6c6c;
 }
+
+#musicList {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+}
+
+#authorList {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+}
+
+#searchContainer {
+    -fx-background-color: #151414;
+}
+
+#addPlaylist {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#2977d7, #0d4c67);
+}
+
+#addPlaylist:hover {
+    -fx-background-color: linear-gradient(#0d4c67, #2977d7);
+}
+
+#searchField {
+    fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: grey;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+}
+
+#searchField:focused {
+    -fx-background-color: #151414;
+}
+
+#searchSong {
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF
+}
+
+/* Alert Box */
+#title {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-family: verdana;
+    -fx-font-size: 16px;
+}
+
+#Box {
+    -fx-background-color: #242424;
+}
+
+#Box2 {
+    -fx-background-color: #242424;
+}
+
+#btnExit {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#2977d7, #0d4c67);
+}
+
+#btnExit:hover {
+    -fx-background-color: linear-gradient(#0d4c67, #2977d7);
+}
