@@ -1,11 +1,14 @@
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.FileInputStream;
@@ -57,7 +60,7 @@ public class LeftPanel {
         btnSearch.setId("btnSearch");
         btnSearch.setOnAction(event -> {
             try {
-                searchField(layout);
+                searchField();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -89,9 +92,15 @@ public class LeftPanel {
     }
      /**
       * Implementation of the search functionalities
-      * @param layout set the textfield in the center
       */
-    private void searchField(BorderPane layout) {
+    private void searchField() {
+
+        Stage stage = new Stage();
+        stage.setTitle("Search Song");
+
+        Label label = new Label("Enter Song Title");
+        label.setId("searchSong");
+        Label separator = new Label("    ");
 
         // looping through HashMap
         for(Map.Entry<String, String> entry : mapFile.entrySet()) {
@@ -101,12 +110,16 @@ public class LeftPanel {
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER);
+        hBox.setId("searchContainer");
 
         TextField searchField = new TextField();
         searchField.setPromptText("Search Song");
         TextFields.bindAutoCompletion(searchField, suggestions);
 
-        hBox.getChildren().add(searchField);
-        layout.setCenter(hBox);
+        hBox.getChildren().addAll(label, separator, searchField);
+
+        Scene scene = new Scene(hBox, 400, 200);
+        stage.setScene(scene);
+        stage.show();
     }
 }
