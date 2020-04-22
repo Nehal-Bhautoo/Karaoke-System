@@ -11,12 +11,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
 
+import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static javafx.geometry.Pos.TOP_CENTER;
 
@@ -29,6 +27,7 @@ public class LeftPanel {
 
     private final Map<String, String> mapFile = CentrePanel.getTextFile();
     private final Set<String> suggestions = new HashSet<>();
+    private final LinkedList<String> playlist = new LinkedList<>();
 
     /**
      * This method add all the buttons that the user will interact with.
@@ -116,7 +115,23 @@ public class LeftPanel {
         searchField.setPromptText("Search Song");
         TextFields.bindAutoCompletion(searchField, suggestions);
 
-        hBox.getChildren().addAll(label, separator, searchField);
+        Label separator2 = new Label("    ");
+
+        Button addPlaylist = new Button();
+        addPlaylist.setId("addPlaylist");
+        addPlaylist.setText("Add to playlist");
+        addPlaylist.setMaxWidth(Double.MAX_VALUE);
+        addPlaylist.setOnAction(event -> {
+            String songTitle = searchField.getText();
+            if(songTitle == null || songTitle.equals("")) {
+                JOptionPane.showMessageDialog(null,"Enter Song Title");
+            } else {
+                playlist.add(songTitle);
+                JOptionPane.showMessageDialog(null, songTitle + " added to Playlist");
+            }
+        });
+
+        hBox.getChildren().addAll(label, separator, searchField, separator2, addPlaylist);
 
         Scene scene = new Scene(hBox, 400, 200);
         stage.setScene(scene);
