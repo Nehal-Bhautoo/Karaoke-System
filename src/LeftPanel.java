@@ -1,3 +1,5 @@
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -5,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -147,10 +150,11 @@ public class LeftPanel {
      * @param layout set the playlist in the centre panel
      */
     private void viewPlayList(BorderPane layout) {
-        Label[] songPlaylist = new Label[10];
+        Label[] songPlaylist = new Label[100];
+        Button[] delete = new Button[100];
+
         Label title = new Label("Playlist");
         title.setId("playListTitle");
-
 
         VBox vBox = new VBox();
 
@@ -163,27 +167,51 @@ public class LeftPanel {
         gridPane.setHgap(450);
 
         //Setting the Grid alignment
-        gridPane.setAlignment(CENTER);
+        gridPane.setAlignment(TOP_CENTER);
 
         //Arranging all the nodes in the grid
         gridPane.add(title, 0, 0);
+
+        GridPane setAllContainer = new GridPane();
+        setAllContainer.setPadding(new Insets(10, 10, 10, 10));
+        setAllContainer.setHgap(10);
 
         VBox playListContainer = new VBox();
         playListContainer.setPadding(new Insets(20));
         playListContainer.setAlignment(BASELINE_LEFT);
 
-        // for each element in linked list create a label
+        VBox btnContainer = new VBox();
+        btnContainer.setPadding(new Insets(20));
+        btnContainer.setAlignment(BASELINE_RIGHT);
+
+        // for each element in linked list create labels and buttons
         for(int i = 0; i<playlist.size(); i++) {
             songPlaylist[i] = new Label();
             songPlaylist[i].setId("songPlaylist");
+            // set label text to element of Link List
             songPlaylist[i].setText(playlist.get(i));
+            delete[i] = new Button();
+            delete[i].setText("Delete");
+            //set button to element index of link list
+            delete[i].setId(String.valueOf(playlist.indexOf(playlist.get(i))));
+            delete[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new MyEventHandler());
+            btnContainer.getChildren().addAll(delete[i]);
             playListContainer.getChildren().addAll(songPlaylist[i]);
         }
-
-        vBox.getChildren().addAll(gridPane, playListContainer);
+        setAllContainer.add(playListContainer, 0, 0);
+        setAllContainer.add(btnContainer, 2, 0);
+        vBox.getChildren().addAll(gridPane, setAllContainer);
         vBox.setAlignment(TOP_CENTER);
 
         layout.setCenter(vBox);
+    }
+
+    private static class MyEventHandler implements EventHandler<Event> {
+        @Override
+        public void handle(Event evt) {
+            String source = ((Control)evt.getSource()).getId();
+            System.out.println(source);
+        }
     }
 
      /**
@@ -229,7 +257,6 @@ public class LeftPanel {
             } else {
                 // add searched song to linklist
                 playlist.add(songTitle);
-                System.out.println(playlist);
                 newAlertBox.alertBox(songTitle + " added to Playlist");
             }
         });

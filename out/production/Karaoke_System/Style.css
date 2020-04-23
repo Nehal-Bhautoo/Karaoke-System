@@ -11,14 +11,20 @@
 
 #btnSearch {
     -fx-background-color: #242424;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: transparent;
 }
 
 #btnSearch:hover {
     -fx-background-color: #6c6c6c;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: transparent;
 }
 
 #btnList {
     -fx-background-color: #242424;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: transparent;
 }
 
 #btnList:hover {
@@ -27,6 +33,8 @@
 
 #playListBtn {
     -fx-background-color: #242424;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: transparent;
 }
 
 #playListBtn:hover {
@@ -41,6 +49,8 @@
 
 #btnPrevious {
     -fx-background-color: #1A1A1A;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: transparent;
 }
 
 #btnPrevious:hover {
@@ -51,6 +61,8 @@
 
 #btnPlay {
     -fx-background-color: #1A1A1A;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: transparent;
 }
 
 #btnPlay:hover {
@@ -62,6 +74,8 @@
 
 #btnNext {
     -fx-background-color: #1A1A1A;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: transparent;
 }
 
 #btnNext:hover {
@@ -97,6 +111,8 @@
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
     -fx-background-color: linear-gradient(#2977d7, #0d4c67);
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: transparent;
 }
 
 #addPlaylist:hover {
@@ -143,6 +159,8 @@
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
     -fx-background-color: linear-gradient(#2977d7, #0d4c67);
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: transparent;
 }
 
 #btnExit:hover {
@@ -171,5 +189,19 @@
 #songPlaylist {
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 20px;
+    -fx-font-family: Langdon;
+}
+
+.button {
+    -fx-text-fill: #FF5733;
+    -fx-font-size: 14px;
     -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: linear-gradient(#2977d7, #0d4c67);
+    -fx-background-color: transparent;
+}
+
+.button:hover {
+    -fx-border-color: linear-gradient(#FF5733, #D8300C);
 }
