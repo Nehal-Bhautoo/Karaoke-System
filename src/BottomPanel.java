@@ -11,7 +11,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class BottomPanel {
+
     CentrePanel centrePanel = new CentrePanel();
+    MediaPlayer.Status mediaPlayer = centrePanel.getMediaPlayer();
+
     public void buildBottom(BorderPane layout) {
         BorderPane bottomLayout = new BorderPane();
         bottomLayout.setId("bottomContainer");
@@ -52,7 +55,13 @@ public class BottomPanel {
         btnPlay.setAlignment(Pos.CENTER);
         btnPlay.setMaxWidth(Double.MAX_VALUE);
         btnPlay.setId("btnPlay");
-        btnPlay.setOnAction(event -> centrePanel.playVideo(layout));
+        btnPlay.setOnAction(event -> {
+            if(mediaPlayer == MediaPlayer.Status.PAUSED) {
+                centrePanel.play();
+            } else {
+                centrePanel.playVideo(layout);
+            }
+        });
         Tooltip play = HoverMessage.getTooltip("Play");
         btnPlay.setTooltip(play);
 
@@ -70,9 +79,11 @@ public class BottomPanel {
         pausedBtn.setMaxWidth(Double.MAX_VALUE);
         pausedBtn.setId("btnPlay");
         pausedBtn.setOnAction(event -> {
-            //bottomBox.getChildren().remove(pausedBtn);
-            MediaPlayer mediaPlayer = centrePanel.getMediaPlayer();
-            mediaPlayer.pause();
+            if(mediaPlayer == MediaPlayer.Status.PAUSED) {
+                centrePanel.play();
+            } else {
+                centrePanel.pauseVideo();
+            }
         });
         Tooltip pause = HoverMessage.getTooltip("Pause");
         pausedBtn.setTooltip(pause);

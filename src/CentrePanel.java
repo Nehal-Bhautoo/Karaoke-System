@@ -1,11 +1,4 @@
-import javafx.application.Platform;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -25,17 +18,19 @@ import java.util.Map;
 public class CentrePanel {
 
     private MediaPlayer mediaPlayer;
-    private Duration duration;
-    private Label playTime;
-    private Slider slider;
+    private MediaPlayer.Status mediaPlayerStatus;
     final static String filePath = "list.txt";
 
     public void setMediaPlayer(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
     }
 
-    public MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
+    public void setStatus(MediaPlayer.Status mediaPlayerStatus) {
+        this.mediaPlayerStatus = mediaPlayerStatus;
+    }
+
+    public MediaPlayer.Status getMediaPlayer() {
+        return mediaPlayerStatus;
     }
 
     /**
@@ -55,54 +50,23 @@ public class CentrePanel {
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
         setMediaPlayer(mediaPlayer);
+        setStatus(mediaPlayerStatus = mediaPlayer.getStatus());
         mediaView.setMediaPlayer(mediaPlayer);
 
-        HBox mediaBar = new HBox();
-        mediaBar.setAlignment(Pos.CENTER);
-        mediaBar.setPadding(new Insets(5,10,5,10));
-        BorderPane.setAlignment(mediaBar, Pos.CENTER);
-
-        //Add time label
-        Label timeLabel = new Label("Time: ");
-        mediaBar.getChildren().add(timeLabel);
-
-        //Add spacer
-        Label spacer = new Label("     ");
-        mediaBar.getChildren().add(spacer);
-
-        //Add time Slider
-        slider = new Slider();
-        HBox.setHgrow(slider, Priority.ALWAYS);
-        slider.setMaxWidth(Double.MAX_VALUE);
-        slider.setMinWidth(50);
-        slider.valueProperty().addListener(observable -> {
-            if(slider.isValueChanging()) {
-                //multiply duration by percentage calculated by slider position
-                mediaPlayer.seek(duration.multiply(slider.getValue() / 100.0));
-            }
-        });
-        mediaBar.getChildren().add(slider);
-
-        // Add play time
-        playTime = new Label();
-        playTime.setPrefWidth(130);
-        playTime.setMinWidth(50);
-        mediaBar.getChildren().add(playTime);
-
-        updateValues();
         //set mediaView in the centre of the gui
         layout.setCenter(mediaView);
-        layout.setTop(mediaBar);
+    }
+     // paused video
+    public void pauseVideo() {
+        mediaPlayer.pause();
     }
 
-    protected void updateValues() {
-        if (playTime != null && slider != null) {
-            Platform.runLater(() -> {
-                MediaPlayer mediaPlayer = getMediaPlayer();
-                Duration currentTime = mediaPlayer.getCurrentTime();
-                playTime.setText(String.valueOf(currentTime));
-            });
-        }
+    //play video
+    public void play() {
+        mediaPlayer.setOnEndOfMedia(() -> {
+            mediaPlayer.seek(Duration.ZERO);
+            mediaPlayer.play();
+        });
     }
 
     /**

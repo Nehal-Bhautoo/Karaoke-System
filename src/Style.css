@@ -156,3 +156,20 @@
     -fx-background-color: #242424;
     -fx-text-fill: linear-gradient(#2977d7, #0d4c67);
 }
+
+/* Playlist */
+#playListTitle {
+    -fx-text-fill: #2977d7;
+    -fx-font-size: 22px;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-border-color: grey;
+    -fx-border-width: 0 0 2 0;
+    -fx-background-color: transparent;
+}
+
+#songPlaylist {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 20px;
+    -fx-font-family: Langdon;
+}

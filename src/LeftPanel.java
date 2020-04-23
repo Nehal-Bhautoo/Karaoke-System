@@ -95,6 +95,7 @@ public class LeftPanel {
         btnPlayList.setId("playListBtn");
         Tooltip playList = HoverMessage.getTooltip("PlayList");
         btnPlayList.setTooltip(playList);
+        btnPlayList.setOnAction(event -> viewPlayList(layout));
 
         // Adding all buttons to container
         buttonBox.getChildren().addAll(btnSearch, btnList, btnPlayList);
@@ -136,6 +137,50 @@ public class LeftPanel {
         gridPane.add(author, 1,0);
 
         vBox.getChildren().addAll(gridPane, separator);
+        vBox.setAlignment(TOP_CENTER);
+
+        layout.setCenter(vBox);
+    }
+
+    /**
+     * List all the songs from the playlist
+     * @param layout set the playlist in the centre panel
+     */
+    private void viewPlayList(BorderPane layout) {
+        Label[] songPlaylist = new Label[10];
+        Label title = new Label("Playlist");
+        title.setId("playListTitle");
+
+
+        VBox vBox = new VBox();
+
+        GridPane gridPane = new GridPane();
+        gridPane.setId("gridPane");
+
+        //Setting the padding
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+
+        gridPane.setHgap(450);
+
+        //Setting the Grid alignment
+        gridPane.setAlignment(CENTER);
+
+        //Arranging all the nodes in the grid
+        gridPane.add(title, 0, 0);
+
+        VBox playListContainer = new VBox();
+        playListContainer.setPadding(new Insets(20));
+        playListContainer.setAlignment(BASELINE_LEFT);
+
+        // for each element in linked list create a label
+        for(int i = 0; i<playlist.size(); i++) {
+            songPlaylist[i] = new Label();
+            songPlaylist[i].setId("songPlaylist");
+            songPlaylist[i].setText(playlist.get(i));
+            playListContainer.getChildren().addAll(songPlaylist[i]);
+        }
+
+        vBox.getChildren().addAll(gridPane, playListContainer);
         vBox.setAlignment(TOP_CENTER);
 
         layout.setCenter(vBox);
