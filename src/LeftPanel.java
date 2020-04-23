@@ -79,7 +79,11 @@ public class LeftPanel {
         btnList.setAlignment(Pos.BASELINE_CENTER);
         btnList.setMaxWidth(Double.MAX_VALUE);
         btnList.setId("btnList");
-        btnList.setOnAction(event -> listMusic(layout));
+        btnList.setOnAction(event -> {
+            listMusic(layout);
+            Song song = new Song();
+            System.out.println(song.getAuthor() + " " + song.getSongTitle());
+        });
         Tooltip listMusic = HoverMessage.getTooltip("List All Song");
         btnList.setTooltip(listMusic);
 
@@ -205,7 +209,7 @@ public class LeftPanel {
 
         layout.setCenter(vBox);
     }
-
+     // delete song from playlist
     private static class MyEventHandler implements EventHandler<Event> {
         @Override
         public void handle(Event evt) {
