@@ -1,7 +1,9 @@
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -115,39 +117,18 @@ public class LeftPanel {
      * @param layout set the list in the centre panel
      */
     private void listMusic(BorderPane layout) {
-        Label music = new Label("Song");
-        music.setId("musicList");
+        TableColumn<Map.Entry<String, String>, String> column1 = new TableColumn<>("Songs");
+        column1.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getKey()));
 
-        Label author = new Label("Artist");
-        author.setId("authorList");
+        TableColumn<Map.Entry<String, String>, String> column2 = new TableColumn<>("Artists");
+        column2.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue()));
 
-        // container
-        VBox vBox = new VBox();
+        ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(mapFile.entrySet());
+        final TableView<Map.Entry<String, String>> tableView = new TableView<>(items);
 
-        GridPane gridPane = new GridPane();
-        gridPane.setId("gridPane");
+        tableView.getColumns().setAll(column1, column2);
 
-        //Setting the padding
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
-
-        //Setting the vertical and horizontal gaps between the columns
-        gridPane.setVgap(50);
-        gridPane.setHgap(450);
-
-        //Setting the Grid alignment
-        gridPane.setAlignment(CENTER);
-
-        // Add a separator line
-        Separator separator = new Separator(Orientation.HORIZONTAL);
-        separator.setId("separator");
-        //Arranging all the nodes in the grid
-        gridPane.add(music, 0, 0);
-        gridPane.add(author, 1,0);
-
-        vBox.getChildren().addAll(gridPane, separator);
-        vBox.setAlignment(TOP_CENTER);
-
-        layout.setCenter(vBox);
+        layout.setCenter(tableView);
     }
 
     /**

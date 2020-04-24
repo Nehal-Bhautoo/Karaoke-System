@@ -84,21 +84,46 @@
     -fx-background-color: #6c6c6c;
 }
 /* list music */
-#musicList {
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #FFFFFF;
+.table-view {
+    -fx-base: #1d1d1d;
+    -fx-control-inner-background: #1d1d1d;
+    -fx-background-color: #1d1d1d;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
 }
 
-#authorList {
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #FFFFFF;
+.table-view .column-header-background {
+    -fx-background-color: transparent;
 }
 
-#separator {
-    -fx-background-color: #2977d7;
-    -fx-background-radius: 2;
+.table-view .column-header, .table-view .filler {
+    -fx-size: 35px;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color:
+            transparent
+            transparent
+            derive(-fx-base, 80%)
+            transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+    -fx-border-color: transparent #1d1d1d transparent #1d1d1d;
+    -fx-background-color: transparent, derive(#1d1d1d,20%);
+}
+
+.split-pane {
+    -fx-padding: 1 0 0 0;
 }
 
 /*Search Window*/
