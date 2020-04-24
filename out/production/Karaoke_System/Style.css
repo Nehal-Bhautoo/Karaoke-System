@@ -193,7 +193,7 @@
 }
 
 .button {
-    -fx-text-fill: #D8300C;
+    -fx-text-fill: linear-gradient(#2977d7, #0d4c67);
     -fx-font-size: 14px;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
@@ -203,6 +203,7 @@
 }
 
 .button:hover {
+    -fx-text-fill: #D8300C;
     -fx-border-color: grey;
     -fx-background-color: black;
 }

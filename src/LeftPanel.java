@@ -121,6 +121,7 @@ public class LeftPanel {
         Label author = new Label("Artist");
         author.setId("authorList");
 
+        // container
         VBox vBox = new VBox();
 
         GridPane gridPane = new GridPane();
@@ -195,8 +196,8 @@ public class LeftPanel {
             // set label text to element of Link List
             songPlaylist[i].setText(playlist.get(i));
             delete[i] = new Button();
-            delete[i].setText("Delete");
-            //set button to element index of link list
+            delete[i].setText("Remove From Playlist");
+            //set button ID to element index of link list
             delete[i].setId(String.valueOf(playlist.indexOf(playlist.get(i))));
             delete[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new MyEventHandler());
             btnContainer.getChildren().addAll(delete[i]);
@@ -213,7 +214,7 @@ public class LeftPanel {
     private static class MyEventHandler implements EventHandler<Event> {
         @Override
         public void handle(Event evt) {
-            String source = ((Control)evt.getSource()).getId();
+            int source = Integer.parseInt(((Control)evt.getSource()).getId());
             System.out.println(source);
         }
     }

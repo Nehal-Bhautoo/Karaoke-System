@@ -23,7 +23,7 @@ public class Interface extends Application {
         for(Map.Entry<String, String> entry : mapFile.entrySet()) {
             song.setSongTitle(entry.getKey());
             song.setAuthor(entry.getValue());
-        } System.out.println(song.getSongTitle());
+        }
         launch();
     }
 
