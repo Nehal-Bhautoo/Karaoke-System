@@ -210,13 +210,26 @@ public class LeftPanel {
 
         Label label = new Label("Enter Song Title");
         label.setId("searchSong");
-        Label separator = new Label("    ");
 
         // looping through HashMap
         for(Map.Entry<String, String> entry : mapFile.entrySet()) {
             // populate hashSet with hashMap value
             suggestions.addAll(Collections.singleton(entry.getValue()));
         }
+
+        GridPane gridPane = new GridPane();
+        gridPane.setId("searchPane");
+        gridPane.setMinSize(400, 200);
+
+        //Setting the padding
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+
+        //Setting the vertical and horizontal gaps between the columns
+        gridPane.setVgap(5);
+        gridPane.setHgap(5);
+
+        //Setting the Grid alignment
+        gridPane.setAlignment(Pos.CENTER);
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER);
@@ -226,8 +239,6 @@ public class LeftPanel {
         searchField.setPromptText("Search Song");
         searchField.setId("searchField");
         TextFields.bindAutoCompletion(searchField, suggestions);
-
-        Label separator2 = new Label("    ");
 
         Button addPlaylist = new Button();
         addPlaylist.setId("addPlaylist");
@@ -246,8 +257,11 @@ public class LeftPanel {
                 newAlertBox.alertBox(songTitle + " added to Playlist");
             }
         });
-        hBox.getChildren().addAll(label, separator, searchField, separator2, addPlaylist);
-        Scene scene = new Scene(hBox, 400, 200);
+        hBox.getChildren().addAll(searchField, addPlaylist);
+
+        gridPane.add(label, 2, 0);
+        gridPane.add(hBox, 2, 1);
+        Scene scene = new Scene(gridPane);
 
         // attach css file
         String cssFile = this.getClass().getResource("Style.css").toExternalForm();

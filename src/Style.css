@@ -112,7 +112,8 @@
 .table-view .column-header .label {
     -fx-font-size: 20pt;
     -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
+    -fx-text-fill: #2977d7;
+    -fx-font-weight: bold;
     -fx-alignment: center-left;
     -fx-opacity: 1;
 }
@@ -145,7 +146,7 @@
 }
 
 #searchField {
-    fx-font-size: 12pt;
+    -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: #FFFFFF;
     -fx-border-color: grey;
@@ -160,6 +161,10 @@
 #searchSong {
     -fx-font-size: 14px;
     -fx-text-fill: #FFFFFF
+}
+
+#searchPane {
+    -fx-background-color: #151414;
 }
 
 /* Alert Box */
