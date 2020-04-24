@@ -143,23 +143,26 @@ public class LeftPanel {
         title.setId("playListTitle");
 
         VBox vBox = new VBox();
+        vBox.setPadding(new Insets(0, 20, 0, 20));
 
         GridPane gridPane = new GridPane();
         gridPane.setId("gridPane");
 
         //Setting the padding
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setPadding(new Insets(20));
 
         gridPane.setHgap(450);
 
         //Setting the Grid alignment
-        gridPane.setAlignment(TOP_CENTER);
+        gridPane.setAlignment(TOP_LEFT);
 
         //Arranging all the nodes in the grid
         gridPane.add(title, 0, 0);
 
+        Separator separator = new Separator();
+
         GridPane setAllContainer = new GridPane();
-        setAllContainer.setPadding(new Insets(10, 10, 10, 10));
+        setAllContainer.setPadding(new Insets(20));
         setAllContainer.setHgap(10);
 
         VBox playListContainer = new VBox();
@@ -186,7 +189,7 @@ public class LeftPanel {
         }
         setAllContainer.add(playListContainer, 0, 0);
         setAllContainer.add(btnContainer, 2, 0);
-        vBox.getChildren().addAll(gridPane, setAllContainer);
+        vBox.getChildren().addAll(gridPane, separator, setAllContainer);
         vBox.setAlignment(TOP_CENTER);
 
         layout.setCenter(vBox);
@@ -210,6 +213,8 @@ public class LeftPanel {
 
         Label label = new Label("Enter Song Title");
         label.setId("searchSong");
+
+        Label seprator = new Label("     ");
 
         // looping through HashMap
         for(Map.Entry<String, String> entry : mapFile.entrySet()) {
@@ -257,7 +262,7 @@ public class LeftPanel {
                 newAlertBox.alertBox(songTitle + " added to Playlist");
             }
         });
-        hBox.getChildren().addAll(searchField, addPlaylist);
+        hBox.getChildren().addAll(searchField, seprator, addPlaylist);
 
         gridPane.add(label, 2, 0);
         gridPane.add(hBox, 2, 1);

@@ -160,7 +160,7 @@
 
 #searchSong {
     -fx-font-size: 14px;
-    -fx-text-fill: #FFFFFF
+    -fx-text-fill: #2977d7;
 }
 
 #searchPane {
@@ -210,9 +210,6 @@
     -fx-text-fill: #2977d7;
     -fx-font-size: 22px;
     -fx-font-family: "Arial Narrow";
-    -fx-font-weight: bold;
-    -fx-border-color: grey;
-    -fx-border-width: 0 0 2 0;
     -fx-background-color: transparent;
 }
 
