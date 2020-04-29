@@ -11,10 +11,17 @@ import javafx.scene.media.MediaPlayer;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 
 public class BottomPanel {
 
     CentrePanel centrePanel = new CentrePanel();
+    private LinkedList<String> playlist;
+    private final Label songPlaying = new Label();
+
+    public void bottomPanel(LinkedList<String> playlist) {
+        this.playlist = playlist;
+    }
 
     public void buildBottom(BorderPane layout) {
         BorderPane bottomLayout = new BorderPane();
@@ -76,6 +83,7 @@ public class BottomPanel {
                 btnPlay.setGraphic(pause);
             }
             System.out.println(mediaPlayer.getStatus());
+            songPlaying.setText("-" + playlist.get(1) + "-");
         });
         Tooltip play = HoverMessage.getTooltip("Play/Pause");
         btnPlay.setTooltip(play);
@@ -95,6 +103,7 @@ public class BottomPanel {
         btnNext.setId("btnNext");
         Tooltip play_next_track = HoverMessage.getTooltip("Play Next Track");
         btnNext.setTooltip(play_next_track);
+        btnNext.setOnAction(event -> System.out.println(playlist));
 
         HBox vBox = new HBox();
         vBox.setAlignment(Pos.CENTER_LEFT);
@@ -115,11 +124,16 @@ public class BottomPanel {
             e.printStackTrace();
         }
         Button playing = new Button();
+        playing.setId("playing");
         playing.setGraphic(nowPlaying);
         playing.setAlignment(Pos.CENTER_LEFT);
         playing.setMaxWidth(Double.MAX_VALUE);
+        playing.setOnAction(event -> System.out.println(playlist));
 
-        vBox.getChildren().addAll(playing, separator, trackPlaying);
+        songPlaying.setId("songPlaying");
+        songPlaying.setAlignment(Pos.BOTTOM_CENTER);
+
+        vBox.getChildren().addAll(playing, separator, trackPlaying, songPlaying);
 
         // Adding buttons to container
         bottomBox.getChildren().addAll(btnPrevious, btnPlay, btnNext);

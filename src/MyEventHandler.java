@@ -19,7 +19,7 @@ public class MyEventHandler implements EventHandler<Event> {
 
     public void handle(Event event) {
         int source = Integer.parseInt(((Control)event.getSource()).getId());
+        alertBox.alertBox(playlist.get(source) + " remove from playlist");
         playlist.remove(source);
-        alertBox.alertBox("Song remove from playlist");
     }
 }

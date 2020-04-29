@@ -1,11 +1,13 @@
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.util.Map;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
  * Implementation of the Interface that will run the app.
@@ -18,17 +20,11 @@ public class Interface extends Application {
     public BorderPane layout;
 
     public static void main(String[] args) {
-        Song song = new Song();
-        Map<String, String> mapFile = CentrePanel.getTextFile();
-        for(Map.Entry<String, String> entry : mapFile.entrySet()) {
-            song.setSongTitle(entry.getKey());
-            song.setAuthor(entry.getValue());
-        }
         launch();
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws FileNotFoundException {
         layout = new BorderPane();
 
         // give root node a CSS ID attribute
@@ -48,6 +44,8 @@ public class Interface extends Application {
 
         // set properties of window application
         primaryStage.setScene(scene);
+        primaryStage.getIcons().add(new Image(new FileInputStream("assets/icon/icon.png")));
+        primaryStage.setTitle("Karaoke Application");
         primaryStage.show();
     }
 

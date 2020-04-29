@@ -30,16 +30,8 @@ public class LeftPanel {
 
     private final Map<String, String> mapFile = CentrePanel.getTextFile();
     private final Set<String> suggestions = new HashSet<>();
-    private LinkedList<String> playlist = new LinkedList<>();
+    private final LinkedList<String> playlist = new LinkedList<>();
     AlertBox newAlertBox = new AlertBox();
-
-    public LinkedList<String> getPlaylist() {
-        return playlist;
-    }
-
-    public void setPlaylist(LinkedList<String> playlist) {
-        this.playlist = playlist;
-    }
 
     /**
      * This method add all the buttons that the user will interact with.
@@ -62,7 +54,6 @@ public class LeftPanel {
             searchIcon.setFitHeight(35);
             searchIcon.setFitWidth(35);
         } catch (FileNotFoundException e) {
-            newAlertBox.alertBox("Search Icon Not Found!!!");
             e.printStackTrace();
         }
         Button btnSearch = new Button("", searchIcon);
@@ -87,11 +78,7 @@ public class LeftPanel {
         btnList.setAlignment(Pos.BASELINE_CENTER);
         btnList.setMaxWidth(Double.MAX_VALUE);
         btnList.setId("btnList");
-        btnList.setOnAction(event -> {
-            listMusic(layout);
-            Song song = new Song();
-            System.out.println(song.getAuthor() + " " + song.getSongTitle());
-        });
+        btnList.setOnAction(event -> listMusic(layout));
         Tooltip listMusic = HoverMessage.getTooltip("List All Song");
         btnList.setTooltip(listMusic);
 
@@ -257,7 +244,8 @@ public class LeftPanel {
             } else {
                 // add searched song to linklist
                 playlist.add(songTitle);
-                setPlaylist(playlist);
+                BottomPanel bottomPanel = new BottomPanel();
+                bottomPanel.bottomPanel(playlist);
                 newAlertBox.alertBox(songTitle + " added to Playlist");
             }
         });

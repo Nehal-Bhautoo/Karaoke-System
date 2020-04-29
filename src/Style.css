@@ -83,6 +83,22 @@
     -fx-background-radius: 20 20 20 20;
     -fx-background-color: #6c6c6c;
 }
+
+#trackPlaying {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: #2977d7;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+#playing {
+    -fx-background-color: #1A1A1A;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: transparent;
+}
+
 /* list music */
 .table-view {
     -fx-base: #1d1d1d;
