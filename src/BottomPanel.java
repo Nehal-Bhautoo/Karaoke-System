@@ -128,7 +128,6 @@ public class BottomPanel {
         playing.setGraphic(nowPlaying);
         playing.setAlignment(Pos.CENTER_LEFT);
         playing.setMaxWidth(Double.MAX_VALUE);
-        playing.setOnAction(event -> System.out.println(playlist));
 
         songPlaying.setId("songPlaying");
         songPlaying.setAlignment(Pos.BOTTOM_CENTER);

@@ -195,6 +195,11 @@ public class LeftPanel {
 
         Stage stage = new Stage();
         stage.setTitle("Search Song");
+        try {
+            stage.getIcons().add(new Image(new FileInputStream("assets/icon/search.png")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         Label label = new Label("Enter Song Title");
         label.setId("searchSong");
@@ -204,7 +209,7 @@ public class LeftPanel {
         // looping through HashMap
         for(Map.Entry<String, String> entry : mapFile.entrySet()) {
             // populate hashSet with hashMap value
-            suggestions.addAll(Collections.singleton(entry.getValue()));
+            suggestions.addAll(Collections.singleton(entry.getKey()));
         }
 
         GridPane gridPane = new GridPane();
