@@ -44,6 +44,7 @@ public class Interface extends Application {
         LeftPanel leftPanel = new LeftPanel();
         leftPanel.buildLeft(layout);
 
+        leftPanel.listMusic(layout);
 
         // set properties of window application
         primaryStage.setScene(scene);

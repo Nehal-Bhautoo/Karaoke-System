@@ -2,7 +2,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.util.Duration;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,19 +17,14 @@ import java.util.Map;
 public class CentrePanel {
 
     private MediaPlayer mediaPlayer;
-    private MediaPlayer.Status mediaPlayerStatus;
     final static String filePath = "list.txt";
+
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
 
     public void setMediaPlayer(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
-    }
-
-    public void setStatus(MediaPlayer.Status mediaPlayerStatus) {
-        this.mediaPlayerStatus = mediaPlayerStatus;
-    }
-
-    public MediaPlayer.Status getMediaPlayer() {
-        return mediaPlayerStatus;
     }
 
     /**
@@ -49,24 +43,10 @@ public class CentrePanel {
         // play the video on the window
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
-        setMediaPlayer(mediaPlayer);
-        setStatus(mediaPlayerStatus = mediaPlayer.getStatus());
         mediaView.setMediaPlayer(mediaPlayer);
-
+        setMediaPlayer(mediaPlayer);
         //set mediaView in the centre of the gui
         layout.setCenter(mediaView);
-    }
-     // paused video
-    public void pauseVideo() {
-        mediaPlayer.pause();
-    }
-
-    //play video
-    public void play() {
-        mediaPlayer.setOnEndOfMedia(() -> {
-            mediaPlayer.seek(Duration.ZERO);
-            mediaPlayer.play();
-        });
     }
 
     /**

@@ -1,8 +1,6 @@
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -32,8 +30,16 @@ public class LeftPanel {
 
     private final Map<String, String> mapFile = CentrePanel.getTextFile();
     private final Set<String> suggestions = new HashSet<>();
-    private final LinkedList<String> playlist = new LinkedList<>();
+    private LinkedList<String> playlist = new LinkedList<>();
     AlertBox newAlertBox = new AlertBox();
+
+    public LinkedList<String> getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(LinkedList<String> playlist) {
+        this.playlist = playlist;
+    }
 
     /**
      * This method add all the buttons that the user will interact with.
@@ -116,7 +122,7 @@ public class LeftPanel {
      * List all the songs and authors
      * @param layout set the list in the centre panel
      */
-    private void listMusic(BorderPane layout) {
+    public void listMusic(BorderPane layout) {
         TableColumn<Map.Entry<String, String>, String> column1 = new TableColumn<>("Songs");
         column1.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getKey()));
 
@@ -135,7 +141,7 @@ public class LeftPanel {
      * List all the songs from the playlist
      * @param layout set the playlist in the centre panel
      */
-    private void viewPlayList(BorderPane layout) {
+    public void viewPlayList(BorderPane layout) {
         Label[] songPlaylist = new Label[100];
         Button[] delete = new Button[100];
 
@@ -183,7 +189,7 @@ public class LeftPanel {
             delete[i].setText("Remove From Playlist");
             //set button ID to element index of link list
             delete[i].setId(String.valueOf(playlist.indexOf(playlist.get(i))));
-            delete[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new MyEventHandler());
+            delete[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new MyEventHandler(playlist));
             btnContainer.getChildren().addAll(delete[i]);
             playListContainer.getChildren().addAll(songPlaylist[i]);
         }
@@ -193,14 +199,6 @@ public class LeftPanel {
         vBox.setAlignment(TOP_CENTER);
 
         layout.setCenter(vBox);
-    }
-     // delete song from playlist
-    private static class MyEventHandler implements EventHandler<Event> {
-        @Override
-        public void handle(Event evt) {
-            int source = Integer.parseInt(((Control)evt.getSource()).getId());
-            System.out.println(source);
-        }
     }
 
      /**
@@ -214,7 +212,7 @@ public class LeftPanel {
         Label label = new Label("Enter Song Title");
         label.setId("searchSong");
 
-        Label seprator = new Label("     ");
+        Label separator = new Label("     ");
 
         // looping through HashMap
         for(Map.Entry<String, String> entry : mapFile.entrySet()) {
@@ -227,7 +225,7 @@ public class LeftPanel {
         gridPane.setMinSize(400, 200);
 
         //Setting the padding
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setPadding(new Insets(10));
 
         //Setting the vertical and horizontal gaps between the columns
         gridPane.setVgap(5);
@@ -259,10 +257,11 @@ public class LeftPanel {
             } else {
                 // add searched song to linklist
                 playlist.add(songTitle);
+                setPlaylist(playlist);
                 newAlertBox.alertBox(songTitle + " added to Playlist");
             }
         });
-        hBox.getChildren().addAll(searchField, seprator, addPlaylist);
+        hBox.getChildren().addAll(searchField, separator, addPlaylist);
 
         gridPane.add(label, 2, 0);
         gridPane.add(hBox, 2, 1);

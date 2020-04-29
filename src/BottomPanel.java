@@ -1,5 +1,7 @@
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,14 +15,15 @@ import java.io.FileNotFoundException;
 public class BottomPanel {
 
     CentrePanel centrePanel = new CentrePanel();
-    MediaPlayer.Status mediaPlayer = centrePanel.getMediaPlayer();
 
     public void buildBottom(BorderPane layout) {
         BorderPane bottomLayout = new BorderPane();
         bottomLayout.setId("bottomContainer");
+        bottomLayout.setMinHeight(25);
 
         HBox bottomBox = new HBox();
         bottomBox.setAlignment(Pos.BOTTOM_CENTER);
+        bottomBox.setPadding(new Insets(0,150,0,0));
 
         //play previous track
         ImageView playPrevious = null;
@@ -41,52 +44,41 @@ public class BottomPanel {
         btnPrevious.setTooltip(play_previous_track);
 
         //play or pause track
-        final ImageView[] playTrack = {null};
-        String path = "assets/icon/play.png";
+        ImageView playTrack = null;
+        String pathPlay = "assets/icon/play.png";
         try {
-            playTrack[0] = new ImageView(new Image(new FileInputStream(path)));
-            playTrack[0].setFitHeight(35);
-            playTrack[0].setFitWidth(35);
+            playTrack = new ImageView(new Image(new FileInputStream(pathPlay)));
+            playTrack.setFitHeight(35);
+            playTrack.setFitWidth(35);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         Button btnPlay = new Button();
-        btnPlay.setGraphic(playTrack[0]);
+        btnPlay.setGraphic(playTrack);
         btnPlay.setAlignment(Pos.CENTER);
         btnPlay.setMaxWidth(Double.MAX_VALUE);
         btnPlay.setId("btnPlay");
         btnPlay.setOnAction(event -> {
-            if(mediaPlayer == MediaPlayer.Status.PAUSED) {
-                centrePanel.play();
-            } else {
-                centrePanel.playVideo(layout);
+            centrePanel.playVideo(layout);
+            String pathPause = "assets/icon/pause.png";
+            MediaPlayer mediaPlayer = centrePanel.getMediaPlayer();
+            ImageView pause = null;
+            try {
+                pause = new ImageView(new Image(new FileInputStream(pathPause)));
+                pause.setFitHeight(35);
+                pause.setFitWidth(35);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
+            if(mediaPlayer.getStatus() == MediaPlayer.Status.UNKNOWN) {
+                //centrePanel.pauseVideo();
+                System.out.println(mediaPlayer.getStatus());
+                btnPlay.setGraphic(pause);
+            }
+            System.out.println(mediaPlayer.getStatus());
         });
-        Tooltip play = HoverMessage.getTooltip("Play");
+        Tooltip play = HoverMessage.getTooltip("Play/Pause");
         btnPlay.setTooltip(play);
-
-        //paused button
-        ImageView paused = null;
-        try {
-            paused = new ImageView(new Image(new FileInputStream("assets/icon/pause.png")));
-            paused.setFitHeight(35);
-            paused.setFitWidth(35);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        Button pausedBtn = new Button("", paused);
-        pausedBtn.setAlignment(Pos.CENTER);
-        pausedBtn.setMaxWidth(Double.MAX_VALUE);
-        pausedBtn.setId("btnPlay");
-        pausedBtn.setOnAction(event -> {
-            if(mediaPlayer == MediaPlayer.Status.PAUSED) {
-                centrePanel.play();
-            } else {
-                centrePanel.pauseVideo();
-            }
-        });
-        Tooltip pause = HoverMessage.getTooltip("Pause");
-        pausedBtn.setTooltip(pause);
 
         //play next track
         ImageView playNext = null;
@@ -104,9 +96,35 @@ public class BottomPanel {
         Tooltip play_next_track = HoverMessage.getTooltip("Play Next Track");
         btnNext.setTooltip(play_next_track);
 
+        HBox vBox = new HBox();
+        vBox.setAlignment(Pos.CENTER_LEFT);
+
+        Label trackPlaying = new Label("Now Playing");
+        trackPlaying.setId("trackPlaying");
+        trackPlaying.setAlignment(Pos.TOP_CENTER);
+
+        Label separator = new Label("      ");
+
+        //Now playing track
+        ImageView nowPlaying = null;
+        try{
+            nowPlaying = new ImageView(new Image(new FileInputStream("assets/icon/now_playing.png")));
+            nowPlaying.setFitHeight(40);
+            nowPlaying.setFitWidth(40);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Button playing = new Button();
+        playing.setGraphic(nowPlaying);
+        playing.setAlignment(Pos.CENTER_LEFT);
+        playing.setMaxWidth(Double.MAX_VALUE);
+
+        vBox.getChildren().addAll(playing, separator, trackPlaying);
+
         // Adding buttons to container
-        bottomBox.getChildren().addAll(btnPrevious, btnPlay, pausedBtn, btnNext);
+        bottomBox.getChildren().addAll(btnPrevious, btnPlay, btnNext);
         bottomLayout.setCenter(bottomBox);
+        bottomLayout.setLeft(vBox);
         layout.setBottom(bottomLayout);
     }
 }
