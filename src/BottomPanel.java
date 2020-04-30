@@ -16,12 +16,8 @@ import java.util.LinkedList;
 public class BottomPanel {
 
     CentrePanel centrePanel = new CentrePanel();
-    private LinkedList<String> playlist;
     private final Label songPlaying = new Label();
-
-    public void bottomPanel(LinkedList<String> playlist) {
-        this.playlist = playlist;
-    }
+    private final LinkedList<String> playlist = GetPlaylist.getLinkedList();
 
     public void buildBottom(BorderPane layout) {
         BorderPane bottomLayout = new BorderPane();
@@ -83,7 +79,7 @@ public class BottomPanel {
                 btnPlay.setGraphic(pause);
             }
             System.out.println(mediaPlayer.getStatus());
-            songPlaying.setText("-" + playlist.get(1) + "-");
+            //songPlaying.setText("-" + playlist.get(1) + "-");
         });
         Tooltip play = HoverMessage.getTooltip("Play/Pause");
         btnPlay.setTooltip(play);
@@ -103,7 +99,17 @@ public class BottomPanel {
         btnNext.setId("btnNext");
         Tooltip play_next_track = HoverMessage.getTooltip("Play Next Track");
         btnNext.setTooltip(play_next_track);
-        btnNext.setOnAction(event -> System.out.println(playlist));
+        btnNext.setOnAction(event -> {
+            AlertBox alertBox = new AlertBox();
+            if(playlist.size() == 0) {
+                alertBox.alertBox("Playlist Empty");
+            } else if(playlist.size() == 1) {
+                alertBox.alertBox("Only 1 song in playlist");
+            } else {
+                String songTitle = playlist.get(1);
+                songPlaying.setText(songTitle);
+            }
+        });
 
         HBox vBox = new HBox();
         vBox.setAlignment(Pos.CENTER_LEFT);

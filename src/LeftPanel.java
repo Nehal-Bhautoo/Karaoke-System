@@ -249,8 +249,8 @@ public class LeftPanel {
             } else {
                 // add searched song to linklist
                 playlist.add(songTitle);
-                BottomPanel bottomPanel = new BottomPanel();
-                bottomPanel.bottomPanel(playlist);
+                GetPlaylist getPlaylist = new GetPlaylist();
+                getPlaylist.addToPlaylist(songTitle);
                 newAlertBox.alertBox(songTitle + " added to Playlist");
             }
         });
