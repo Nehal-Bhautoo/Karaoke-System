@@ -65,21 +65,25 @@ public class BottomPanel {
             centrePanel.playVideo(layout);
             String pathPause = "assets/icon/pause.png";
             MediaPlayer mediaPlayer = centrePanel.getMediaPlayer();
-            ImageView pause = null;
-            try {
-                pause = new ImageView(new Image(new FileInputStream(pathPause)));
-                pause.setFitHeight(35);
-                pause.setFitWidth(35);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            if(mediaPlayer.getStatus() == MediaPlayer.Status.UNKNOWN) {
-                //centrePanel.pauseVideo();
+            if(playlist.size() == 0) {
+                songPlaying.setText(" - Playlist Empty - ");
+            } else {
+                ImageView pause = null;
+                try {
+                    pause = new ImageView(new Image(new FileInputStream(pathPause)));
+                    pause.setFitHeight(35);
+                    pause.setFitWidth(35);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                if(mediaPlayer.getStatus() == MediaPlayer.Status.UNKNOWN) {
+                    //centrePanel.pauseVideo();
+                    System.out.println(mediaPlayer.getStatus());
+                    btnPlay.setGraphic(pause);
+                }
                 System.out.println(mediaPlayer.getStatus());
-                btnPlay.setGraphic(pause);
+                songPlaying.setText(" - " + playlist.get(1) + " - ");
             }
-            System.out.println(mediaPlayer.getStatus());
-            //songPlaying.setText("-" + playlist.get(1) + "-");
         });
         Tooltip play = HoverMessage.getTooltip("Play/Pause");
         btnPlay.setTooltip(play);
