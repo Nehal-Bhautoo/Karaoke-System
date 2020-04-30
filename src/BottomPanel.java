@@ -69,12 +69,19 @@ public class BottomPanel {
                 alertBox.alertBox("Only 1 song in playlist");
                 songPlaying.setText("");
             } else {
-                int count = getCount();
-                count--;
-                setCount(count);
-                String songTitle = playlist.get(count);
-                songPlaying.setText("- " + songTitle + " -");
-                System.out.println(count);
+                try {
+                    int count = getCount();
+                    if(count < 0) {
+                        alertBox.alertBox("No more song in playlist");
+                    } else {
+                        count--;
+                        setCount(count);
+                        String songTitle = playlist.get(count);
+                        songPlaying.setText("- " + songTitle + " -");
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    alertBox.alertBox("No more song in playlist");
+                }
             }
         });
 
@@ -144,11 +151,19 @@ public class BottomPanel {
                 alertBox.alertBox("Only 1 song in playlist");
                 songPlaying.setText("");
             } else {
-                int count = getCount();
-                count++;
-                String songTitle = playlist.get(count);
-                setCount(count);
-                songPlaying.setText("- " + songTitle + " -");
+                try {
+                    int count = getCount();
+                    if(count > playlist.size()) {
+                        alertBox.alertBox("No more song in playlist");
+                    } else {
+                        count++;
+                        String songTitle = playlist.get(count);
+                        setCount(count);
+                        songPlaying.setText("- " + songTitle + " -");
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    alertBox.alertBox("No more song in playlist");
+                }
             }
         });
 
