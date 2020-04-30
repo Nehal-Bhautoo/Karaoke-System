@@ -1,3 +1,5 @@
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -6,8 +8,10 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -111,7 +115,7 @@ public class BottomPanel {
                 alertBox.alertBox("Only 1 song in playlist");
             } else {
                 String songTitle = playlist.get(1);
-                songPlaying.setText(songTitle);
+                songPlaying.setText("- " + songTitle + " -");
             }
         });
 
@@ -142,7 +146,18 @@ public class BottomPanel {
         songPlaying.setId("songPlaying");
         songPlaying.setAlignment(Pos.BOTTOM_CENTER);
 
-        vBox.getChildren().addAll(playing, separator, trackPlaying, songPlaying);
+        // added fade transition to a label
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2.0), songPlaying);
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+        fadeTransition.setCycleCount(Animation.INDEFINITE);
+        fadeTransition.play();
+
+        GridPane gridPane = new GridPane();
+        gridPane.add(trackPlaying, 0, 0);
+        gridPane.add(songPlaying, 0, 1);
+
+        vBox.getChildren().addAll(playing, separator, gridPane);
 
         // Adding buttons to container
         bottomBox.getChildren().addAll(btnPrevious, btnPlay, btnNext);

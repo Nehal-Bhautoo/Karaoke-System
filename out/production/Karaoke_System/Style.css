@@ -99,6 +99,14 @@
     -fx-border-color: transparent;
 }
 
+#songPlaying {
+    -fx-text-fill: lightslategray;
+    -fx-font-weight: lighter;
+    -fx-font-family: verdana;
+    -fx-font-size: 12px;
+    -fx-alignment: bottom-center;
+}
+
 /* list music */
 .table-view {
     -fx-base: #1d1d1d;
