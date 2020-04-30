@@ -23,6 +23,17 @@ public class BottomPanel {
     private final Label songPlaying = new Label();
     private final LinkedList<String> playlist = GetPlaylist.getLinkedList();
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    private int count;
+
+
     public void buildBottom(BorderPane layout) {
         BorderPane bottomLayout = new BorderPane();
         bottomLayout.setId("bottomContainer");
@@ -49,6 +60,23 @@ public class BottomPanel {
         });
         Tooltip play_previous_track = HoverMessage.getTooltip("Play Previous Track");
         btnPrevious.setTooltip(play_previous_track);
+        btnPrevious.setOnAction(event -> {
+            AlertBox alertBox = new AlertBox();
+            if(playlist.size() == 0) {
+                alertBox.alertBox("Playlist Empty");
+                songPlaying.setText("");
+            } else if(playlist.size() == 1) {
+                alertBox.alertBox("Only 1 song in playlist");
+                songPlaying.setText("");
+            } else {
+                int count = getCount();
+                count--;
+                setCount(count);
+                String songTitle = playlist.get(count);
+                songPlaying.setText("- " + songTitle + " -");
+                System.out.println(count);
+            }
+        });
 
         //play or pause track
         ImageView playTrack = null;
@@ -86,7 +114,7 @@ public class BottomPanel {
                     btnPlay.setGraphic(pause);
                 }
                 System.out.println(mediaPlayer.getStatus());
-                songPlaying.setText(" - " + playlist.get(1) + " - ");
+                songPlaying.setText(" - " + playlist.get(0) + " - ");
             }
         });
         Tooltip play = HoverMessage.getTooltip("Play/Pause");
@@ -111,10 +139,15 @@ public class BottomPanel {
             AlertBox alertBox = new AlertBox();
             if(playlist.size() == 0) {
                 alertBox.alertBox("Playlist Empty");
+                songPlaying.setText("");
             } else if(playlist.size() == 1) {
                 alertBox.alertBox("Only 1 song in playlist");
+                songPlaying.setText("");
             } else {
-                String songTitle = playlist.get(1);
+                int count = getCount();
+                count++;
+                String songTitle = playlist.get(count);
+                setCount(count);
                 songPlaying.setText("- " + songTitle + " -");
             }
         });
