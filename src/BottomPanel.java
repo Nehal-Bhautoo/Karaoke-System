@@ -62,6 +62,7 @@ public class BottomPanel {
         btnPrevious.setTooltip(play_previous_track);
         btnPrevious.setOnAction(event -> {
             AlertBox alertBox = new AlertBox();
+            MediaPlayer mediaPlayer = centrePanel.getMediaPlayer();
             if(playlist.size() == 0) {
                 alertBox.alertBox("Playlist Empty");
                 songPlaying.setText("");
@@ -78,6 +79,9 @@ public class BottomPanel {
                         setCount(count);
                         String songTitle = playlist.get(count);
                         songPlaying.setText("- " + songTitle + " -");
+                        mediaPlayer.stop();
+                        mediaPlayer.play();
+                        centrePanel.setMediaPlayer(mediaPlayer);
                     }
                 } catch (IndexOutOfBoundsException e) {
                     alertBox.alertBox("No more song in playlist");
@@ -116,7 +120,8 @@ public class BottomPanel {
                     e.printStackTrace();
                 }
                 if(mediaPlayer.getStatus() == MediaPlayer.Status.UNKNOWN) {
-                    //centrePanel.pauseVideo();
+                    mediaPlayer.pause();
+                    centrePanel.setMediaPlayer(mediaPlayer);
                     System.out.println(mediaPlayer.getStatus());
                     btnPlay.setGraphic(pause);
                 }
@@ -144,6 +149,7 @@ public class BottomPanel {
         btnNext.setTooltip(play_next_track);
         btnNext.setOnAction(event -> {
             AlertBox alertBox = new AlertBox();
+            MediaPlayer mediaPlayer = centrePanel.getMediaPlayer();
             if(playlist.size() == 0) {
                 alertBox.alertBox("Playlist Empty");
                 songPlaying.setText("");
@@ -160,6 +166,9 @@ public class BottomPanel {
                         String songTitle = playlist.get(count);
                         setCount(count);
                         songPlaying.setText("- " + songTitle + " -");
+                        mediaPlayer.stop();
+                        mediaPlayer.play();
+                        centrePanel.setMediaPlayer(mediaPlayer);
                     }
                 } catch (IndexOutOfBoundsException e) {
                     alertBox.alertBox("No more song in playlist");
