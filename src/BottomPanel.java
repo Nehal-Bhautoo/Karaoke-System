@@ -22,6 +22,7 @@ public class BottomPanel {
     CentrePanel centrePanel = new CentrePanel();
     private final Label songPlaying = new Label();
     private final LinkedList<String> playlist = GetPlaylist.getLinkedList();
+    private int count;
 
     public int getCount() {
         return count;
@@ -30,9 +31,6 @@ public class BottomPanel {
     public void setCount(int count) {
         this.count = count;
     }
-
-    private int count;
-
 
     public void buildBottom(BorderPane layout) {
         BorderPane bottomLayout = new BorderPane();

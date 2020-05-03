@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Implementation of the Centre interface that will be displayed.
  * This implementation will display the Musics list and play video.
- * @author Nehal Bhautoo
+ * @author <Authors name>
  */
 public class CentrePanel {
 
@@ -45,6 +45,7 @@ public class CentrePanel {
         mediaPlayer.setAutoPlay(true);
         mediaView.setMediaPlayer(mediaPlayer);
         setMediaPlayer(mediaPlayer);
+
         //set mediaView in the centre of the gui
         layout.setCenter(mediaView);
     }

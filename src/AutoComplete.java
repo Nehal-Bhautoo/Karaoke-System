@@ -11,7 +11,7 @@ import java.util.TreeSet;
 
 /**
  * This class is a TextField which implements an "autocomplete" functionality, based on a supplied list of entries.
- * @author Nehal Bhautoo
+ * @author <Authors name>
  */
 public class AutoComplete extends TextField {
     // Existing entries

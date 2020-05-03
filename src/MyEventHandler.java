@@ -7,7 +7,7 @@ import java.util.LinkedList;
 /**
  * This class implements a delete method
  * that remove na element from a linked list.
- * @author Nehal Bhautoo
+ * @author <Authors name>
  */
 public class MyEventHandler implements EventHandler<Event> {
     private final LinkedList<String> playlist;

@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 /**
  * Implementing an alert box interface to display errors
- * @author Nehal Bhautoo
+ * @author <Authors name>
  */
 public class AlertBox {
     public static Stage stage = new Stage();

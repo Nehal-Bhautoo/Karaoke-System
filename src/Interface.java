@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 /**
  * Implementation of the Interface that will run the app.
  * This implementation will display all the interface functionalities.
- * @author Nehal Bhautoo
+ * @author <Authors name>
  */
 public class Interface extends Application {
 

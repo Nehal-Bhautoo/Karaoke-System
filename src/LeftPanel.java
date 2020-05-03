@@ -24,7 +24,7 @@ import static javafx.geometry.Pos.*;
 /**
  * Implementation of the Left interface.
  * This implementation will display search button and list all music.
- * @author Nehal Bhautoo
+ * @author <Authors name>
  */
 public class LeftPanel {
 

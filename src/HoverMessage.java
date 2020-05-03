@@ -1,7 +1,7 @@
 import javafx.scene.control.Tooltip;
  /**
   * Implementing a hover message interface
-  * @author Nehal Bhautoo
+  * @author <Authors name>
   */
 public class HoverMessage {
     /**
