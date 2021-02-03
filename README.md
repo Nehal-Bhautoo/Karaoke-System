@@ -3,7 +3,7 @@
 
 ## Description
 
-The applicaiton uses java 8 
+The applicaiton uses java 8 and was built on Linux.
 
   - Karaoke application which allows searching a large number of songs by title and adding songs to a ‘[play-list](list.txt)’. When playing it should play
    the video of the songs in the play-list in order.
