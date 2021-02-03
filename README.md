@@ -5,7 +5,7 @@
 
 The applicaiton uses java 8 
 
-  - Karaoke application which allows searching a large number of songs by title and adding songs to a ‘[play-list](list)’. When playing it should play
+  - Karaoke application which allows searching a large number of songs by title and adding songs to a ‘[play-list](list.txt)’. When playing it should play
    the video of the songs in the play-list in order.
    
    - Appropriate data structure(s) and algorithm(s) to implement these features which focuses on Time Complexity Analysis.
